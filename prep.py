@@ -19,25 +19,63 @@ import argparse
 # SEE in gia-pix2pix---....
 
 parser = argparse.ArgumentParser(description='')
-parser.add_argument('--ptcd',
-                            dest='path_to_content_dataset',
-                                                type=str,
-                                                                    default=None,
-                                                                                        help='Path to Places365 training dataset.')
+parser.add_argument('--root_path',
+                    dest='root_path',
+                    type=str,
+                    default='/mnt/c/Users/jeang/Dropbox/lib/datasets',
+                    help='Where your content folder is')
 
-dim = 1024  # target dimensions, 
-do_crop = False # if true, resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize
+parser.add_argument('--in_path',
+                    dest='in_path',
+                    type=str,
+                    default='gia-young-picasso-v04-2012211928-tii-v02-rogner-01-02',
+                    help='Name of the content folder in root_path')
+parser.add_argument('--out_path',
+                    dest='out_path',
+                    type=str,
+                    default='gia-young-picasso-v04-2012211928-tii-v02-rogner-01-03-out',
+                    help='Name of the content folder in ds_root')
+parser.add_argument('--folder_suffix',
+                    dest='folder_suffix',
+                    type=str,
+                    default='_p2p_canny',
+                    help='Suffix to append to out. If not specified will add _p2p_canny.')
+parser.add_argument('--dim',
+                    dest='dim',
+                    type=int,
+                    default=1024,
+                    help='dimension of out pic')
+parser.add_argument('--canny_thresh1',
+                    dest='canny_thresh1',
+                    type=int,
+                    default=100,
+                    help='canny_thresh1- def 100')
+parser.add_argument('--canny_thresh2',
+                    dest='canny_thresh2',
+                    type=int,
+                    default=200,
+                    help='canny_thresh1 - def 200')
+parser.add_argument('--do_crop',
+                    dest='do_crop',
+                    type=bool,
+                    default=False,
+                    help=' if true, resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize')
 
-canny_thresh1 = 100
-canny_thresh2 = 200
+args = parser.parse_args()
 
-root_path = '/mnt/c/Users/jeang/Dropbox/lib/datasets'
-in_path = os.path.join(root_path, 'gia-young-picasso-v04-2012211928-tii-v02-rogner-01-02')
-out_path = os.path.join(root_path, 'gia-young-picasso-v04-2012211928-tii-v02-rogner-01-02-out')
+dim = args.dim  # target dimensions, 
+do_crop = args.do_crop # if true, resizes shortest edge to target dimensions and crops other edge. If false, does non-uniform resize
+
+canny_thresh1 = args.canny_thresh1
+canny_thresh2 = args.canny_thresh2
+
+root_path = args.root_path
+in_path = os.path.join(root_path, args.in_path)
+out_path = os.path.join(root_path, args.out_path)
 
 
 #########################################
-out_path += '_' + str(dim) + '_p2p_canny'
+out_path += '_' + str(dim) + args.folder_suffix
 if do_crop:
     out_path += '_crop'
 
