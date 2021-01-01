@@ -1,0 +1,26 @@
+    1  top
+    2  ps -aef
+    3  cat /work/test-tii-v02-rogner-01-02-out_1024.sh 
+    4  cat /work/test-02.sh 
+    5  export input_dir="/a/lib/datasets/gia-yp-tii-composite-v04-v05-2012310103/train"
+    6  cat /work/test-02.sh 
+    7* export output_dir="/a/lib/results/tii-test/mo"
+    8  export trained_dir="/a/model/models/model_giapicallo_v04__201221-pix2pix-2012300846"
+    9  cat /work/test-02.sh 
+   10  python pix2pix.py         --mode test         --output_dir "$output_dir"         --input_dir "$input_dir"         --checkpoint "$trained_dir"
+   11  history
+   12  export output_dir="/a/lib/results/tii-test/model_giapicallo_v04__201221-pix2pix-201230084-2012311809-drawings"
+   13  export input_dir="/a/lib/samples/tii__test_drawings__2012311748/"
+   14  python pix2pix.py         --mode test         --output_dir "$output_dir"         --input_dir "$input_dir"         --checkpoint "$trained_dir"
+   15  python pix2pix.py         --mode test         --output_dir "$output_dir"         --input_dir "$input_dir"         --checkpoint "$trained_dir" --scale_size 1024
+   16  vi pix2pix.py 
+   17  python pix2pix.py         --mode test         --output_dir "$output_dir"         --input_dir "$input_dir"         --checkpoint "$trained_dir" 
+   18  vi pix2pix.py 
+   19  cat /work/batch-train-2012310152.sh 
+   20  vi /work/batch-train-2012310152.sh 
+   21  (sleep 150 ;/work/batch-train-2012310152.sh  )&
+   22  chmod a+x /work/batch-train-2012310152.sh 
+   23  cp /work/pix2pix.py .
+   24  export trained_dir="/a/model/models/model_gia-yp-tii-composite-v04-v05-2012310103"
+   25  export input_dir="/a/lib/samples/tii__test_drawings__2012311748/"
+   26  history >/work/history-2012312359.txt
