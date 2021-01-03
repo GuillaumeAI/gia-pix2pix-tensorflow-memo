@@ -10,6 +10,12 @@ RUN apt-get install python-pyqt5 -y
 RUN  apt-get install pyqt5-dev-tools -y
 RUN apt-get install qttools5-dev-tools -y
 RUN apt-get install python-opencv -y
+RUN pip install --upgrade pip
+RUN pip install httpserver
+RUN pip install --upgrade pip
+RUN  pip install tensorflowjs
+# Fix the export in server/tools/...
+RUN pip install backports.tempfile
 
 #RUN pip install  pyqt5  
 #jgwill/pix2pix:gia-pix2pix-tensorflow-memo
