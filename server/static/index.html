@@ -34,6 +34,21 @@ function main() {
   }
 
   create_editor({
+    name: "giapicallotiiv01512px",
+    weights_url: "/models//models/model_giapicallo_v04__201221-pix2pix-2012300846-512px-80k.pict",
+    mode: "line",
+    clear: "#000000",
+    colors: {
+      line: "#ffffff",
+      eraser: "#000000",
+    },
+    draw: "#000000",
+    initial_input: "/edges2cats-input.png",
+    initial_output: "/edges2cats-output.png",
+    sheet_url: "/edges2cats-sheet.jpg",
+  })
+
+  create_editor({
     name: "edges2cats",
     weights_url: "/models/edges2cats_AtoB.pict",
     mode: "line",
