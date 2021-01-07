@@ -1,3 +1,5 @@
+#!/bin/bash
+
 
 export mount_root=/a
 export container_tag=jgwill/pix2pix:gia-pix2pix-tensorflow-memo-2101071007
