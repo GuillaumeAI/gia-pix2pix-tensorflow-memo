@@ -13,23 +13,23 @@ export checkpoint=$model_dir
 
 mkdir -p $model_dir
 mkdir -p $output_test_dir
+export max_epochs=45
+export scale_size=572
 
 # We did started to train already
-#python pix2pix.py --mode train --output_dir $model_dir --max_epochs 250 --input_dir $input_dir --which_direction BtoA 
+## A First training from scratch
+#python pix2pix.py --mode train --output_dir $model_dir --max_epochs $max_epochs --input_dir $input_dir --which_direction BtoA --scale_size $scale_size
 
-export max_epochs=45
+
 for i in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60; do 
-	# Train the model for some epochs
-	python pix2pix.py \
-	--mode train --output_dir $model_dir \
-	--max_epochs $max_epochs \
-	--input_dir $input_dir --which_direction BtoA \
-	--checkpoint $checkpoint  --display_freq 100
-
-
+echo "------------------------------------------------------------------------"
+echo "------------------------TESTING--------------------->>>-----------------"
 	# Render some tests for that iteration and continue training then
 	export out_test_dir_iteration="$output_test_dir-$i"
 	export test_input_dir="$input_dir"
+echo "--Testing in from : $test_input_dir"
+echo "--- output to : $out_test_dir_iteration"
+sleep 2
 	
 	python pix2pix.py \
 	--mode test \
@@ -43,6 +43,9 @@ for i in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
 			 # Test with few samples
         		export test_input_dir="$input_dir/../val/$s"
         		export out_test_dir_iteration="$output_test_dir-$i-val-$s"
+echo "--Testing in from : $test_input_dir"
+echo "--- output to : $out_test_dir_iteration"
+sleep 2
        			python pix2pix.py \
         			--mode test \
         			--output_dir "$out_test_dir_iteration" \
@@ -50,7 +53,20 @@ for i in 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
         			--checkpoint "$trained_dir"
 		
 		done
+echo "---------------------DONE TESTING-------------------------<<----------------"
+echo "----------------------------------------------------------------------------"
+echo "---------------------TRAINING------------------>>---------------------------"
 #gia-ds-tii-2101212311-sketch-to-stylized-XTrain210115/val/out_4096_crop_cc
+	# TRAIN
+	 # Train the model for some epochs
+        python pix2pix.py \
+        	--mode train --output_dir $model_dir \
+        	--max_epochs $max_epochs \
+        	--input_dir $input_dir --which_direction BtoA \
+        	--checkpoint $checkpoint  --display_freq 100 \
+		--scale_size $scale_size
 
- 
+
+echo "----------------------DONE TRAINING iteration ---------<<<-------------------"
+ echo "----------------------------------------------------------------------------"
 done
