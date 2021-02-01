@@ -2,9 +2,14 @@
 # Loop and test and train even more
 # -------------------------------------------------
 #batch-train-gia-ds-tii-2102011823-enginepart-v01-XTrain2102011823.sh
-
-export model_dir="/a/model/models/model_gia-ds-tii-2102011823-enginepart-v01-XTrain2102011823"
-export input_dir="/a/lib/samples/tii-game-2102/out_2540_all"
+dim=1258
+#out_1258_all
+export mount_root=/a
+export lib_root=$mount_root/lib
+export model_root=$mount_root/model/models
+export sample_root=$lib_root/samples
+export model_dir="$model_root/model_gia-ds-tii-2102011823-enginepart-v01-XTrain2102011823"
+export input_dir=$sample_root'/tii-game-2102/out_'$dim'_all'
 
 export trained_dir=$model_dir
 #export output_test_dir=$input_dir/../test-2101220030
