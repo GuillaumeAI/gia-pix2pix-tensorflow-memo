@@ -57,21 +57,21 @@ sleep 1
 
 
 	# Testing few iterations samples located in : gia-ds-tii-2101212311-sketch-to-stylized-XTrain210115/val/...
-	for s in out_4096_crop_cc out_4096_crop out_4096
-		do
-			 # Test with few samples
-        		export test_input_dir="$input_dir/../val/$s"
-        		export out_test_dir_iteration="$output_test_dir/$i-val-$s"
-echo "--Testing in from : $test_input_dir"
-echo "--- output to : $out_test_dir_iteration"
-sleep 2
-       			python pix2pix.py \
-        			--mode test \
-        			--output_dir "$out_test_dir_iteration" \
-        			--input_dir "$test_input_dir" \
-        			--checkpoint "$trained_dir"
+#	for s in out_4096_crop_cc out_4096_crop out_4096
+#		do
+#			 # Test with few samples
+ #       		export test_input_dir="$input_dir/../val/$s"
+  #      		export out_test_dir_iteration="$output_test_dir/$i-val-$s"
+#echo "--Testing in from : $test_input_dir"
+#echo "--- output to : $out_test_dir_iteration"
+#sleep 2
+#       			python pix2pix.py \
+#        			--mode test \
+#        			--output_dir "$out_test_dir_iteration" \
+#        			--input_dir "$test_input_dir" \
+#        			--checkpoint "$trained_dir"
 		
-		done
+#		done
 echo "---------------------DONE TESTING-------------------------<<----------------"
 echo "----------------------------------------------------------------------------"
 echo "---------------------TRAINING------------------>>---------------------------"
