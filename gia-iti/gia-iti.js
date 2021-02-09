@@ -124,7 +124,7 @@ function make_docker_cmd(output) {
 		`${source_file_name_only}` +
 		` ` +
 		`${target_file_name_only}`;
-
+	console.log(`Running : ${cmdToRun}`);
 	platform_run(cmdToRun);
 
 }
