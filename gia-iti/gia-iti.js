@@ -97,7 +97,7 @@ fs.access(source_file, fs.F_OK, (err) => {
 			// cwd = cmd.runSync('echo "$(pwd)"');
 			// outputting(cwd);
 			cmd.run(
-				`export indir="$(realpath ${source_dir})";export outdir="$(realpath ${target_dir})";echo "$indir\n$outdir"`,
+				`export indir="$(cd "$(dirname "${source_file}")"; pwd -P)/$(basename "${source_file}")";export outdir="$(realpath ${target_dir})";echo "$indir\n$outdir"`,
 				function (err, data, stderr) {
 					// console.log(data);
 					make_docker_cmd(data);
