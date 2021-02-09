@@ -29,6 +29,10 @@ sleep 1
 echo "-----------Listing /checkpoint for testing-----------">/out/ls_cp.txt
 ls $checkpoint_dir >>/out/ls_cp.txt
 
+echo "------Testing INputs" > /out/input-output.txt
+echo $1 >> /out/input-output.txt
+echo $2 >> /out/input-output.txt
+
 echo "exiting, see $0 and keep coding it to continue the thing"
 echo "something in the input dir" >> /model/input/out.txt
 sleep 1

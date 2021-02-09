@@ -12,9 +12,9 @@ ________.___   _____    .______________.___
 \    \_\  \   /    |    \ |   | |    |   |   |
 \______  /___\____|__  / |___| |____|   |___|
 	   \/            \/                      
-
+by Guillaume Descoteaux-Isabelle, 2020
 	   `);
-	   
+
 var container_tag = "jgwill/gia-iti";
 if (process.env.gia_tii_container_tag) container_tag = process.env.gia_tii_container_tag;
 
