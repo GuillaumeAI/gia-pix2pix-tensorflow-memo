@@ -19,12 +19,14 @@ mkdir -p $work_dir $infered_dir
 #@STCGoal PREP - Create the Split input the test is requiring
 python3 prep.py --root_path $model_dir --in_path $input_dir --out_path $preped_dir --dim $dim
 # Should have a preped file in /model/$preped_dir
-echo "----------Listing stuff to help insure all is well in the env------"
-ls /model/$preped_dir
+echo "----------Listing stuff to help insure all is well in the env------">/out/ls_prep.txt
+ls /model/$preped_dir >>/out/ls_prep.txt
 sleep 2
-echo "-----------Listing / for testing-----------"
-ls /
+echo "-----------Listing / for testing-----------">/out/ls_slash.txt
+ls />>/out/ls_slash.txt
 echo "exiting, see $0 and keep coding it to continue the thing"
+
+echo "something in the input dir" >> /model/input/out.txt
 sleep 5
 exit
 #@STCGoal INFERENCE (thru Test)

@@ -8,6 +8,8 @@ RUN apt install imagemagick -y
 WORKDIR /work
 COPY run_iti_inference.sh .
 COPY split.sh .
+COPY starting.sh
+RUN chmod a+x *sh
 
 ENTRYPOINT ["/bin/bash","run_iti_inference.sh"]
 

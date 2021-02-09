@@ -4,6 +4,17 @@
  
  * Current Reality:First testing
  */
+console.log(`
+
+________.___   _____    .______________.___ 
+/  _____/|   | /  _  \   |   \__    ___/|   |
+/   \  ___|   |/  /_\  \  |   | |    |   |   |
+\    \_\  \   /    |    \ |   | |    |   |   |
+\______  /___\____|__  / |___| |____|   |___|
+	   \/            \/                      
+
+	   `);
+	   
 var container_tag = "jgwill/gia-iti";
 if (process.env.gia_tii_container_tag) container_tag = process.env.gia_tii_container_tag;
 
