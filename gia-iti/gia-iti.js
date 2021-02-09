@@ -58,7 +58,7 @@ fs.access(source_file, fs.F_OK, (err) => {
 	if (err) {
 	  console.error(err);	
 	  console.log(`
-	  ------------ERROR---  file must be specified as input
+	  ------------ERROR--- valid  file must be specified as input
 	  gia-iti myinput.jpg path/out.jpg
 	  ---------------------------------`);
 	  
