@@ -84,7 +84,7 @@ do
 
     d=/out/$direction
     mkdir -p $d
-    cp $infered_dir_target/images/* $d
+    cp $infered_dir_target/images/*-outputs.png $d
 
     echo "---exporting render: $d----------">> /out/itilog.txt
     echo "---------------------------">> /out/itilog.txt
@@ -100,4 +100,4 @@ ls $infered_dir  >> /out/infered.txt
 
 #source /model/split.sh /out/$target_file_name_only
 
-sleep 100
+sleep 38
