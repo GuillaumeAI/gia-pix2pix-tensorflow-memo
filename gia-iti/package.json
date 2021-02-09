@@ -1,0 +1,32 @@
+{
+  "name": "gia-tii",
+  "version": "0.1.0",
+  "description": "CLI wrapper TII model inference using Pix2Pix AI",
+  "main": "tii",
+  "scripts": {
+    "test": "node iti.js my_source_image.jpg "
+  },
+  "bin": {
+    "gis-csm": "gia-iti.js"
+  },
+  "repository": {
+    "bugs": "https://github.com/jgwill/gis-make-contact-sheet/issues",
+    "type": "git",
+    "url": "https://github.com/jgwill/gis-make-contact-sheet/tree/main/gis-csm",
+    "directory": "/gis-csm"
+  },
+  "keywords": [
+    "contact-sheet",
+    "cli"
+  ],
+  "author": "Guillaume Descoteaux-Isabelle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jgwill/gis-make-contact-sheet/issues"
+  },
+  "homepage": "https://github.com/jgwill/gis-make-contact-sheet#readme",
+  "dependencies": {
+    "node-cmd": "^4.0.0",
+    "node-powershell": "^4.0.0"
+  }
+}
