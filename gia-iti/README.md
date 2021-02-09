@@ -1,4 +1,4 @@
-# Cross Platform ImageToImage (ITI) Command Wrapper
+# Cross Platform Image To Image Translation (ITI) Command Wrapper
 
 * Receive an input image and translate it to an output image using command line on any platform
 
