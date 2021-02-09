@@ -105,6 +105,7 @@ function make_docker_cmd(output) {
 		`-v ${checkpoint_dir.trim()}:${checkpoint_mount_path}  ` +
 		`${container_tag}  ` +
 		`${source_file_name_only}` +
+		` ` +
 		`${target_file_name_only}`;
 
 	platform_run(cmdToRun);

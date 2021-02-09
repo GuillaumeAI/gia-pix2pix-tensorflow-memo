@@ -9,18 +9,29 @@ model_dir=/model
 input_dir=input
 source_dir=$model_dir/input
 target_dir=/out
-work_dir=/prep
+work_dir=/iti
 dim=2048
 preped_dir=preped
 infered_dir=/infered
 #init
 mkdir -p $work_dir $infered_dir
+indir=$work_dir/00_indir
+cp $source_dir/$source_file_name_only $indir
+echo "---listing $indir ----------" > /out/indir.txt
+echo cp $source_dir/$source_file_name_only $indir >> /out/indir.txt
+ls $indir >> /out/indir.txt
+mkdir -p $indir
+exit
 
 #@STCGoal PREP - Create the Split input the test is requiring
 python3 prep.py --root_path $model_dir --in_path $input_dir --out_path $preped_dir --dim $dim
 # Should have a preped file in /model/$preped_dir
 echo "----------Listing stuff to help insure all is well in the env------">/out/ls_prep.txt
 ls /model/$preped_dir >>/out/ls_prep.txt
+
+echo "---ls /model/input...." >>/out/ls_prep.txt
+ls /model/input >>/out/ls_prep.txt
+
 sleep 1
 echo "-----------Listing / for testing-----------">/out/ls_slash.txt
 ls />>/out/ls_slash.txt
