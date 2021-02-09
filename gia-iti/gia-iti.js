@@ -55,7 +55,7 @@ var target_file_name_only = path.basename(target_file);
 // console.log(target_dir);
 
 try {
-	if (fs.existsSync(path)) {
+	if (fs.existsSync(source_file)) {
 		//file exists
 
 
