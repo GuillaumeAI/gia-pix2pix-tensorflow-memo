@@ -1,6 +1,7 @@
 #!/bin/bash
 #run_iti_inference.sh
 ## ENV AND ARGS
+python_interpreter=python
 checkpoint_dir=/checkpoint
 
 source_file_name_only=$1
@@ -11,26 +12,44 @@ source_dir=$model_dir/input
 target_dir=/out
 work_dir=/iti
 dim=2048
-preped_dir=preped
+preped_name=01_preped
 infered_dir=/infered
 #init
 mkdir -p $work_dir $infered_dir
-indir=$work_dir/00_indir
+indir_name=00_indir
+indir=$work_dir/$indir_name
+prepeddir=$work_dir/$preped_name
+mkdir -p $indir $prepeddir
+
 cp $source_dir/$source_file_name_only $indir
 echo "---listing $indir ----------" > /out/indir.txt
 echo cp $source_dir/$source_file_name_only $indir >> /out/indir.txt
-ls $indir >> /out/indir.txt
-mkdir -p $indir
-exit
 
 #@STCGoal PREP - Create the Split input the test is requiring
-python3 prep.py --root_path $model_dir --in_path $input_dir --out_path $preped_dir --dim $dim
-# Should have a preped file in /model/$preped_dir
-echo "----------Listing stuff to help insure all is well in the env------">/out/ls_prep.txt
-ls /model/$preped_dir >>/out/ls_prep.txt
+echo "---PWD----" >> /out/indir.txt
+pwd >> /out/indir.txt
+echo "python3 prep.py --root_path $work_dir --in_path $indir_name --out_path $preped_name --dim $dim" >> /out/indir.txt
+$python_interpreter prep.py --root_path $work_dir --in_path $indir_name --out_path $preped_name --dim $dim
 
-echo "---ls /model/input...." >>/out/ls_prep.txt
-ls /model/input >>/out/ls_prep.txt
+ls $indir >> /out/indir.txt
+
+# Copy the isotheric subdir in a dir we control
+cp $prepeddir'_'*/*  $prepeddir
+
+echo "------prep: $preped_name -  $prepeddir" >> /out/indir.txt
+ls $prepeddir >> /out/indir.txt
+
+echo "----- /iti -------" >> /out/indir.txt
+ls /iti >> /out/indir.txt
+
+
+#sleep 150
+#exit
+
+
+
+# Should have a preped file in /model/$preped_dir
+
 
 sleep 1
 echo "-----------Listing / for testing-----------">/out/ls_slash.txt
