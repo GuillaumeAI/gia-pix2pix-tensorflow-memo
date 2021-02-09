@@ -37,6 +37,7 @@ var checkpoint_mount_path = "/checkpoint";
 
 
 var path = require('path');
+const fs = require('fs')
 var resolve = path.resolve;
 
 var os = process.platform;
@@ -53,44 +54,60 @@ var target_file_name_only = path.basename(target_file);
 
 // console.log(target_dir);
 
-if (os == "win32") {
-	//running context will use Powershell to run docker
-	const Shell = require('node-powershell');
+try {
+	if (fs.existsSync(path)) {
+		//file exists
 
-	const ps = new Shell({
-		executionPolicy: 'Bypass',
-		noProfile: true
-	});
 
-	// ps.addCommand(`$in = \${PWD}.path;$out = Resolve-Path ${target_dir};echo "$in";"$out"`);
-	ps.addCommand(`$in = Resolve-Path ${source_dir};$out = Resolve-Path ${target_dir};echo "$in";"$out"`);
+		if (os == "win32") {
+			//running context will use Powershell to run docker
+			const Shell = require('node-powershell');
 
-	ps.invoke()
-		.then(output => {
-			//console.log(output);
+			const ps = new Shell({
+				executionPolicy: 'Bypass',
+				noProfile: true
+			});
 
-			make_docker_cmd(output);
-		})
-		.catch(err => {
-			console.log(err);
-		});
-}
-else {
-	//we assume linux
-	var cmd = require('node-cmd');
+			// ps.addCommand(`$in = \${PWD}.path;$out = Resolve-Path ${target_dir};echo "$in";"$out"`);
+			ps.addCommand(`$in = Resolve-Path ${source_dir};$out = Resolve-Path ${target_dir};echo "$in";"$out"`);
 
-	//*nix supports multiline commands
+			ps.invoke()
+				.then(output => {
+					//console.log(output);
 
-	// cwd = cmd.runSync('echo "$(pwd)"');
-	// outputting(cwd);
-	cmd.run(
-		`export indir="$(realpath ${source_dir})";export outdir="$(realpath ${target_dir})";echo "$indir\n$outdir"`,
-		function (err, data, stderr) {
-			// console.log(data);
-			make_docker_cmd(data);
+					make_docker_cmd(output);
+				})
+				.catch(err => {
+					console.log(err);
+				});
 		}
-	);
+		else {
+			//we assume linux
+			var cmd = require('node-cmd');
 
+			//*nix supports multiline commands
+
+			// cwd = cmd.runSync('echo "$(pwd)"');
+			// outputting(cwd);
+			cmd.run(
+				`export indir="$(realpath ${source_dir})";export outdir="$(realpath ${target_dir})";echo "$indir\n$outdir"`,
+				function (err, data, stderr) {
+					// console.log(data);
+					make_docker_cmd(data);
+				}
+			);
+
+		}
+
+	}
+	else {
+		console.log(`
+	------------ERROR---  file must be specified as input
+	gia-iti myinput.jpg path/out.jpg
+	---------------------------------`);
+	}
+} catch (err) {
+	console.error(err)
 }
 
 
@@ -111,6 +128,12 @@ function make_docker_cmd(output) {
 	platform_run(cmdToRun);
 
 }
+
+
+
+
+
+
 
 function platform_run(cmdToRun) {
 
@@ -151,7 +174,7 @@ function platform_run(cmdToRun) {
 	}
 
 	console.log(`---------------------------
-  Container is working in background and will stop when done :)`);
+		Container is working in background and will stop when done :)`);
 	console.log(` your result will be : ${target_file}
-  ---------------------------------------`);
+		---------------------------------------`);
 }

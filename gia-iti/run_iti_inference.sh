@@ -1,5 +1,11 @@
 #!/bin/bash
 #run_iti_inference.sh
+
+canny_thresh1=80
+canny_thresh2=40
+
+dim=2048
+
 ## ENV AND ARGS
 pix2pix_script=pix2pix.py
 
@@ -14,7 +20,6 @@ input_dir=input
 source_dir=$model_dir/input
 target_dir=/out
 work_dir=/iti
-dim=2048
 scale_size=$dim
 
 preped_name=01_preped
@@ -35,19 +40,16 @@ echo cp $source_dir/$source_file_name_only $indir >> /out/indir.txt
 #@STCGoal PREP - Create the Split input the test is requiring
 echo "---PWD----" >> /out/indir.txt
 pwd >> /out/indir.txt
-echo "$python_interpreter  prep.py --root_path $work_dir --in_path $indir_name --out_path $preped_name --dim $dim" >> /out/indir.txt
-$python_interpreter prep.py --root_path $work_dir --in_path $indir_name --out_path $preped_name --dim $dim
 
-ls $indir >> /out/indir.txt
+echo "$python_interpreter  prep.py --root_path $work_dir --in_path $indir_name --out_path $preped_name --dim $dim" >> /out/indir.txt
+
+$python_interpreter prep.py --root_path $work_dir --in_path $indir_name --out_path $preped_name --dim $dim --canny_thresh1 $canny_thresh1 --canny_thresh2 $canny_thresh2 --do_crop TRUE
+
+
 
 # Copy the isotheric subdir in a dir we control
 cp $preped_dir'_'*/*  $preped_dir
 
-echo "------prep: $preped_name -  $preped_dir" >> /out/indir.txt
-ls $preped_dir >> /out/indir.txt
-
-echo "----- /iti -------" >> /out/indir.txt
-ls /iti >> /out/indir.txt
 
 
 #sleep 150
@@ -58,6 +60,7 @@ ls /iti >> /out/indir.txt
 # Should have a preped file in /model/$preped_dir
 
 
+sd="/out/stories/$(date +"%y%m%d%H%M")"
 
 #@STCGoal INFERENCE (thru Test)
 for direction in "AtoB" "BtoA"
@@ -83,8 +86,11 @@ do
     --scale_size $scale_size
 
     d=/out/$direction
-    mkdir -p $d
+    s=$sd'_'$direction
+    mkdir -p $d $s
     cp $infered_dir_target/images/*-outputs.png $d
+    cp $infered_dir_target/images/*.png $s
+    cp $preped_dir/* $s
 
     echo "---exporting render: $d----------">> /out/itilog.txt
     echo "---------------------------">> /out/itilog.txt
@@ -100,4 +106,4 @@ ls $infered_dir  >> /out/infered.txt
 
 #source /model/split.sh /out/$target_file_name_only
 
-sleep 38
+#sleep 38

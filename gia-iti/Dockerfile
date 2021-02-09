@@ -8,7 +8,7 @@ RUN apt install imagemagick -y
 ####
 WORKDIR /model
 RUN git pull
-
+RUN echo "---"
 COPY run_iti_inference.sh .
 COPY split.sh .
 COPY starting.sh .
