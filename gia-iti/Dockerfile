@@ -12,6 +12,8 @@ RUN git pull
 COPY run_iti_inference.sh .
 COPY split.sh .
 COPY starting.sh .
+COPY pix2pix.py .
+
 RUN chmod 777 *sh
 
 ENTRYPOINT ["/bin/bash","run_iti_inference.sh"]
