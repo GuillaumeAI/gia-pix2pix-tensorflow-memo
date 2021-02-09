@@ -48,7 +48,14 @@ $python_interpreter prep.py --root_path $work_dir --in_path $indir_name --out_pa
 
 
 # Copy the isotheric subdir in a dir we control
-cp $preped_dir'_'*/*  $preped_dir
+mkdir -p /conv_tmp
+for f in $preped_dir'_'*/* 
+    do 
+        fn=${source_file_name_only%.*}
+        convert $f -flop $preped_dir/$fn'_flop'.jpg
+        cp $f $preped_dir/
+done
+#cp $preped_dir'_'*/*  $preped_dir
 
 
 
@@ -88,7 +95,22 @@ do
     d=/out/$direction
     s=$sd'_'$direction
     mkdir -p $d $s
-    cp $infered_dir_target/images/*-outputs.png $d
+    mkdir -p /_out_conv
+    # for f in $infered_dir_target/images/*.png
+    # do 
+    #         fn=${$f%.*}
+    #          convert $f -flop $fn'_f.png'
+    # done
+
+#    cp /_out_conv/*_f*.png $d
+    #cp /_out_conv/*-outputs.png $d
+    #cp /_out_conv/*-outputs.png /_out_conv
+    cp $infered_dir_target/images/*-outputs.png /_out_conv
+    for ff in /_out_conv/*-outputs.png 
+    do
+    echo "convert $ff -flop $d/$source_file_name_only">> /out/itilog.txt
+    convert $ff -flop $d/$source_file_name_only
+    done
     cp $infered_dir_target/images/*.png $s
     cp $preped_dir/* $s
 
@@ -106,4 +128,4 @@ ls $infered_dir  >> /out/infered.txt
 
 #source /model/split.sh /out/$target_file_name_only
 
-sleep 22
+sleep 222
