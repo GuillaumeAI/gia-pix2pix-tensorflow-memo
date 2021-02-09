@@ -54,10 +54,17 @@ var target_file_name_only = path.basename(target_file);
 
 // console.log(target_dir);
 
-try {
-	if (fs.existsSync(source_file)) {
-		//file exists
-
+fs.access(source_file, fs.F_OK, (err) => {
+	if (err) {
+	  console.error(err);	
+	  console.log(`
+	  ------------ERROR---  file must be specified as input
+	  gia-iti myinput.jpg path/out.jpg
+	  ---------------------------------`);
+	  
+	  process.exit(1);
+	  return
+	}
 
 		if (os == "win32") {
 			//running context will use Powershell to run docker
@@ -100,15 +107,8 @@ try {
 		}
 
 	}
-	else {
-		console.log(`
-	------------ERROR---  file must be specified as input
-	gia-iti myinput.jpg path/out.jpg
-	---------------------------------`);
-	}
-} catch (err) {
-	console.error(err)
-}
+	
+);
 
 
 function make_docker_cmd(output) {
