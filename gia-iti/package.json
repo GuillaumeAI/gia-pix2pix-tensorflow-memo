@@ -1,6 +1,6 @@
 {
   "name": "gia-iti",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI wrapper TII model inference using Pix2Pix AI",
   "main": "tii",
   "scripts": {
@@ -17,7 +17,8 @@
   },
   "keywords": [
     "iti",
-    "cli","gia"
+    "cli",
+    "gia"
   ],
   "author": "Guillaume Descoteaux-Isabelle",
   "license": "MIT",

@@ -9,7 +9,7 @@ WORKDIR /work
 COPY run_iti_inference.sh .
 COPY split.sh .
 COPY starting.sh
-RUN chmod a+x *sh
+RUN chmod 777 *sh
 
 ENTRYPOINT ["/bin/bash","run_iti_inference.sh"]
 
