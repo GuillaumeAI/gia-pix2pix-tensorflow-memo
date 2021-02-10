@@ -128,4 +128,4 @@ ls $infered_dir  >> /out/infered.txt
 
 #source /model/split.sh /out/$target_file_name_only
 
-sleep 222
+sleep 5
