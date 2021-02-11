@@ -119,6 +119,11 @@ do
     #cp /_out_conv/*-outputs.png $d
     #cp /_out_conv/*-outputs.png /_out_conv
     cp $infered_dir_target/images/*-outputs.png /_out_conv
+    
+    echo "---------------------------------">> $logfile
+    echo "-----------OUT_CONV_CONTENT------------" >> $logfile
+    ls /_out_conv/* >> $logfile
+    
     for ff in /_out_conv/*-outputs.png 
     do
         echo "convert $ff -flop $d/$source_file_name_only">> /out/itilog.txt

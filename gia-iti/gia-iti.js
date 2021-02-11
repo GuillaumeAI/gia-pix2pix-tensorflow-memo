@@ -118,6 +118,8 @@ function make_docker_cmd(output) {
 	var cmdToRun =
 		`docker run -d -t --rm ` +
 		`-v ${inPath.trim()}:${mount_in} ` +
+		`-e "SET_CONTAINER_TIMEZONE=true" ` +
+		`-e "CONTAINER_TIMEZONE=US/New_York" ` +
 		`-v ${outPath.trim()}:${mount_out}  ` +
 		`-v ${checkpoint_dir.trim()}:${checkpoint_mount_path}  ` +
 		`${container_tag}  ` +
