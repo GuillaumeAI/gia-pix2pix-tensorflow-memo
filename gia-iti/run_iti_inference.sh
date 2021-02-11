@@ -122,9 +122,10 @@ do
     cp $infered_dir_target/images/*-outputs.png /_out_conv
     
     echo "---------------------------------">> $logfile
-    echo "-----------OUT_CONV_CONTENT------------" >> $logfile
-    ls /_out_conv/* >> $logfile
+    echo "-----------OUT_CONV_CONTENT--->>-------" >> $logfile
+    ls $outc/* >> $logfile
     
+    echo "-----------OUT_CONV_CONTENT---<<-------" >> $logfile
     for ff in $outc/*
     do
         echo "convert $ff -flop $d/$source_file_name_only">>  $logfile
@@ -135,6 +136,8 @@ do
     cp $outc $s
     (cd $infered_dir_target ; tar cf - * | (cd $s ; tar xf -))
 
+    echo "---------------------------------">> $logfile
+    
     echo "---exporting render: $d----------">>  $logfile
     echo "---------------------------">>   $logfile
 

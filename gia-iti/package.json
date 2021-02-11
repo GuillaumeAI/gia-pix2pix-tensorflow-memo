@@ -1,6 +1,6 @@
 {
   "name": "gia-iti",
-  "version": "0.2.29",
+  "version": "0.2.30",
   "description": "CLI wrapper TII model inference using Pix2Pix AI",
   "main": "tii",
   "scripts": {
