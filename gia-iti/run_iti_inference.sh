@@ -13,7 +13,10 @@ python_interpreter=python
 
 checkpoint_dir=/checkpoint
 
+logfile=/out/itilog.txt
+
 source_file_name_only=$1
+source_file_name_only_noext=${source_file_name_only%.*}
 target_file_name_only=$2
 model_dir=/model
 input_dir=input
@@ -35,7 +38,7 @@ mkdir -p $indir $preped_dir
 
 cp $source_dir/$source_file_name_only $indir
 echo "---listing $indir ----------" > /out/indir.txt
-echo cp $source_dir/$source_file_name_only $indir >> /out/indir.txt
+echo cp $source_dir/$source_file_name_only $indir >> $logfile
 
 #@STCGoal PREP - Create the Split input the test is requiring
 echo "---PWD----" >> /out/indir.txt
@@ -54,6 +57,8 @@ for f in $preped_dir'_'*/*
         fn=${source_file_name_only%.*}
         convert $f -flop $preped_dir/$fn'_flop'.jpg
         cp $f $preped_dir/
+        echo "-----------CONTENT of Prep_dir---------" >> $logfile
+        ls $preped_dir >>  $logfile
 done
 #cp $preped_dir'_'*/*  $preped_dir
 
@@ -66,13 +71,12 @@ done
 
 # Should have a preped file in /model/$preped_dir
 
-
 sd="/out/stories/$(date +"%y%m%d%H%M")"
 
 #@STCGoal INFERENCE (thru Test)
 for direction in "AtoB" "BtoA"
 do
-    echo "----Direction: $direction : ">> /out/itilog.txt
+    echo "----Direction: $direction : ">> $logfile
 
     infered_dir_target=$infered_dir'_'$direction
 
@@ -93,7 +97,7 @@ do
     --scale_size $scale_size
 
     d=/out/$direction
-    s=$sd'_'$direction
+    s=$sd'_'$direction'__'$source_file_name_only_noext
     mkdir -p $d $s
     mkdir -p /_out_conv
     # for f in $infered_dir_target/images/*.png
@@ -108,11 +112,12 @@ do
     cp $infered_dir_target/images/*-outputs.png /_out_conv
     for ff in /_out_conv/*-outputs.png 
     do
-    echo "convert $ff -flop $d/$source_file_name_only">> /out/itilog.txt
-    convert $ff -flop $d/$source_file_name_only
+        echo "convert $ff -flop $d/$source_file_name_only">> /out/itilog.txt
+        convert $ff -flop $d/$source_file_name_only
     done
     cp $infered_dir_target/images/*.png $s
     cp $preped_dir/* $s
+    (cd $infered_dir_target ; tar cf - * | (cd $s ; tar xf -))
 
     echo "---exporting render: $d----------">> /out/itilog.txt
     echo "---------------------------">> /out/itilog.txt
