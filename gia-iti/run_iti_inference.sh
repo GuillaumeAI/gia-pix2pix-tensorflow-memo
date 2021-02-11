@@ -108,7 +108,8 @@ do
     d=/out/$direction
     s=$sd'_'$direction'__'$source_file_name_only_noext
     mkdir -p $d $s
-    mkdir -p /_out_conv
+    outc=/_out_conv
+    mkdir -p $outc
     # for f in $infered_dir_target/images/*.png
     # do 
     #         fn=${$f%.*}
@@ -124,17 +125,18 @@ do
     echo "-----------OUT_CONV_CONTENT------------" >> $logfile
     ls /_out_conv/* >> $logfile
     
-    for ff in /_out_conv/*-outputs.png 
+    for ff in $outc/*
     do
-        echo "convert $ff -flop $d/$source_file_name_only">> /out/itilog.txt
+        echo "convert $ff -flop $d/$source_file_name_only">>  $logfile
         convert $ff -flop $d/$source_file_name_only
     done
     cp $infered_dir_target/images/*.png $s
     cp $preped_dir/* $s
+    cp $outc $s
     (cd $infered_dir_target ; tar cf - * | (cd $s ; tar xf -))
 
-    echo "---exporting render: $d----------">> /out/itilog.txt
-    echo "---------------------------">> /out/itilog.txt
+    echo "---exporting render: $d----------">>  $logfile
+    echo "---------------------------">>   $logfile
 
 done
 
