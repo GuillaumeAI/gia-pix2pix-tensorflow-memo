@@ -119,11 +119,11 @@ function make_docker_cmd(output) {
 	
 		`-e "SET_CONTAINER_TIMEZONE=true" ` +
 		`-e "CONTAINER_TIMEZONE=America/Toronto" ` +
+		`-v /etc/timezone:/etc/timezone:ro ` + 
 	*/
 	var cmdToRun =
 		`docker run -d -t --rm ` +
 		`-v ${inPath.trim()}:${mount_in} ` +
-		`-v /etc/timezone:/etc/timezone:ro ` + 
 		`-v ${outPath.trim()}:${mount_out}  ` +
 		`-v ${checkpoint_dir.trim()}:${checkpoint_mount_path}  ` +
 		`${container_tag}  ` +

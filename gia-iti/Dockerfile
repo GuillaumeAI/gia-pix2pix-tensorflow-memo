@@ -15,6 +15,7 @@ COPY starting.sh .
 COPY pix2pix.py .
 
 RUN chmod 777 *sh
+RUN echo "America/Toronto" >/etc/timezone
 
 ENTRYPOINT ["/bin/bash","run_iti_inference.sh"]
 
