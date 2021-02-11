@@ -13,8 +13,6 @@ python_interpreter=python
 
 checkpoint_dir=/checkpoint
 
-logfile=/out/itilog.txt
-
 source_file_name_only=$1
 source_file_name_only_noext=${source_file_name_only%.*}
 target_file_name_only=$2
@@ -25,6 +23,11 @@ target_dir=/out
 work_dir=/iti
 scale_size=$dim
 
+logfile=/out/itilog.txt
+
+echo "---------------------------------">> $logfile
+echo "----------$(date)-->>------------">> $logfile
+    
 preped_name=01_preped
 infered_dir=/infered
 #init
@@ -67,6 +70,10 @@ done
 #sleep 150
 #exit
 
+echo "---------------------------------">> $logfile
+
+echo "---------------------------------">> $logfile
+
 
 
 # Should have a preped file in /model/$preped_dir
@@ -76,6 +83,8 @@ sd="/out/stories/$(date +"%y%m%d%H%M")"
 #@STCGoal INFERENCE (thru Test)
 for direction in "AtoB" "BtoA"
 do
+    echo "---------------------------------">> $logfile
+
     echo "----Direction: $direction : ">> $logfile
 
     infered_dir_target=$infered_dir'_'$direction
