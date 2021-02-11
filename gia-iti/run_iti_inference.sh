@@ -24,9 +24,11 @@ work_dir=/iti
 scale_size=$dim
 
 logfile=/out/itilog.txt
+sd="/out/stories/$(date +"%y%m%d%H%M")"
 
-echo "---------------------------------">> $logfile
+echo "-============================================================--">> $logfile
 echo "----------$(date)-->>------------">> $logfile
+echo "-============================================================--">> $logfile
     
 preped_name=01_preped
 infered_dir=/infered
@@ -55,16 +57,26 @@ $python_interpreter prep.py --root_path $work_dir --in_path $indir_name --out_pa
 
 # Copy the isotheric subdir in a dir we control
 mkdir -p /conv_tmp
+pn=$sd'__'$preped_name
+mkdir -p $pn
+
 for f in $preped_dir'_'*/* 
     do 
         fn=${source_file_name_only%.*}
-        convert $f -flop $preped_dir/$fn'_flop'.jpg
+        tf=$preped_dir/$fn'_flop'.jpg
+        convert $f -flop $tf
         cp $f $preped_dir/
-        echo "-----------CONTENT of Prep_dir---------" >> $logfile
-        ls $preped_dir >>  $logfile
+        cp $tf $preped_dir/
+        cp $preped_dir/$fn'_flop'.jpg $pn
+        cp $f $pn
 done
 #cp $preped_dir'_'*/*  $preped_dir
 
+for dd in $preped_dir'_'*
+    do 
+        echo "-----------CONTENT of $dd---------" >> $logfile
+        ls $dd >>  $logfile
+    done
 
 
 #sleep 150
@@ -78,7 +90,6 @@ echo "---------------------------------">> $logfile
 
 # Should have a preped file in /model/$preped_dir
 
-sd="/out/stories/$(date +"%y%m%d%H%M")"
 
 #@STCGoal INFERENCE (thru Test)
 for direction in "AtoB" "BtoA"
@@ -119,7 +130,10 @@ do
 #    cp /_out_conv/*_f*.png $d
     #cp /_out_conv/*-outputs.png $d
     #cp /_out_conv/*-outputs.png /_out_conv
-    cp $infered_dir_target/images/*-outputs.png /_out_conv
+    cp $infered_dir_target/images/*-outputs.png $outc    
+    echo "---------------------------------">> $logfile
+    echo "-----------output_dir/images--->>-------" >> $logfile
+    ls $infered_dir_target/images/* >> $logfile
     
     echo "---------------------------------">> $logfile
     echo "-----------OUT_CONV_CONTENT--->>-------" >> $logfile
@@ -133,11 +147,12 @@ do
     done
     cp $infered_dir_target/images/*.png $s
     cp $preped_dir/* $s
-    cp $outc $s
+    mkdir -p $s/outc
+    cp $outc/* $s/outc
     (cd $infered_dir_target ; tar cf - * | (cd $s ; tar xf -))
 
     echo "---------------------------------">> $logfile
-    
+
     echo "---exporting render: $d----------">>  $logfile
     echo "---------------------------">>   $logfile
 
@@ -151,5 +166,8 @@ echo "--------infered : $infered_dir ------" > /out/infered.txt
 ls $infered_dir  >> /out/infered.txt
 
 #source /model/split.sh /out/$target_file_name_only
+
+echo "====================-$(date)--<<=================-">> $logfile
+
 
 sleep 5
